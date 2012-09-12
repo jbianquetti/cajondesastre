@@ -1,0 +1,7 @@
+# Bash function that starts an lxc containter inside a dettached screen session
+# To access the container, issue screen -r "host1"
+
+
+
+function lxc-start {  screen -d -m -S "$1" -- lxc-start -n "$1" }
+
