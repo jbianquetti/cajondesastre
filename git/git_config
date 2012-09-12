@@ -1,0 +1,23 @@
+#    Setup git
+#  --------------
+
+# ¿Who am i?
+git config --global user.name "Jorge Bianquetti"
+git config --global user.email "jbianquetti@_gmail.com"
+
+# Let's add some  colour to our lives!
+
+git config --global color.ui auto
+
+# SVN-like shortcuts 
+
+git config --global alias.st status   # git st
+git config --global alias.ci commit   # git ci 
+git config --global alias.co checkout # git co
+git config --global alias.br branch   # git br
+
+# turn on the credential helper so that git will save your password in memory for 15 minutes
+# ONLY work with "https://"  repos," git://" repos uses SSH key auth.
+# Let's change to 1 hour
+
+git config --global credential.helper 'cache --timeout=3600'
