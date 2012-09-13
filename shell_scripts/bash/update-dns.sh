@@ -16,6 +16,6 @@ nsupdate << EOF
 server  $SERVER
 zone $DOMAIN
 update delete $HOST.$DOMAIN. A
-update add $HOST.$DOMAIN.es. 86400 A $IPADD
+update add $HOST.$DOMAIN. 86400 A $IPADD
 send
 EOF
