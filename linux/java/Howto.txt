@@ -1,0 +1,32 @@
+# From http://vietpad.sourceforge.net/javaonlinux.html
+
+
+Configure Java environment on Linux
+
+After installing Java Development Kit or Java Runtime Environment on Linux/Unix, you may still need to do some configuration to get Java ready for running or compiling Java programs. The following instruction will guide you through the process of setting up JDK for software development. JRE can be configured similarly.
+
+JDK is usually installed into /usr/java directory. Create a symbolic link to the installation directory. That way makes it easier to switch between different Java versions that you may have just by redirecting the link to the appropriate target directory.
+
+# ln -s /usr/java/jdk1.5.0 /usr/java/j2se
+
+Create a java.sh file in /etc/profile.d directory with content as follows:
+
+#!/bin/bash
+           
+JAVA_HOME=/usr/java/j2se
+JAVA_FONTS=/usr/share/fonts/truetype
+ANT_HOME=/usr/share/ant
+                       
+PATH=$JAVA_HOME/bin:$ANT_HOME/bin:$PATH
+                                       
+export PATH JAVA_HOME JAVA_FONTS ANT_HOME
+export CLASSPATH=.
+
+The file contains various shell commands which set and export necessary environment variables for Java. It assumes Apache Ant and Unicode TrueType fonts have been installed in appropriate directories. Ant is a tool widely used in building and executing Java applications. Shell settings from configuration files in the /etc/profile.d directory are gathered by /ect/profile during login, setting up user environment information for every user.
+
+Assign execute permissions:
+# chmod 755 java.sh
+
+You can verify the availability of Java to users after login by:
+# java -version
+
