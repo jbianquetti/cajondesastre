@@ -1,0 +1,48 @@
+Supose you have an bunch of SSH servers, and HashKnownHosts set to yes.
+You must have an ~/.ssh/known_hosts witih names o ip NOT READABLE 
+something like this
+
+|1|B4P9gvUB0dxLggmpzwByzUq/pE8=|c1XWWoqLCtX5GU1HHjgwVS41DDU= ecdsa-sha2-nistp256 AAAAE2VjZHNh|1|B4P9gvUB0dxLggmpzwByzUq/pE8=|c1XWWoqLCtX5GU1HHjgwVS41DDU= ecdsa-sha2-nistp256 AAAAE2VjZHNhLL...........
+
+IP address has changed, and DNS record don't match anymore ¿What can U do?
+
+
+
+
+Step 0: search for hostname or IP 
+
+ssh-keygen -H  -F vm-chef-server and
+
+
+Step 1: identify key alg. 
+
+Simple: search something like  ssh-rsa or  ecdsa-.... on previous response 
+
+  ...  ecdsa-sha2-nistp256 ... in our case.
+
+
+Step 2: Generate an IP range txt for scanning. 
+
+Poor example (theres is more pulished tools out there):
+
+for i in `seq 0 255` ; do echo "172.18.2.$i" >> ip_range.txt ;done 
+
+Step 3: Generate an ssh key store via scanning local net for ecdsa keys
+
+ssh-keyscan -t ecdsa -f ip_range.txt > /tmp/sshkeyscan.out 
+
+Watch out! Don't use -H while scanning!
+
+Step 4:  grep /tmp/sshkeyscan.out. You must only grep the key
+
+grep "AAAAE2VjZHNhL....output ommited...lBBBMuB1DEmpOcFEb2I="  /tmp/sshkeyscan.out
+
+
+You got it!
+
+172.18.3.143 ecdsa-sha2-nistp256 AAAAE2VjZHNhL....output ommited...lBBBMuB1DEmpOcFEb2I=
+^^^^^^^^^^^^↓
+            This is what you're looking for!
+
+
+
