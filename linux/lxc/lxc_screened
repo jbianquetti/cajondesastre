@@ -1,7 +1,30 @@
-# Bash function that starts an lxc containter inside a dettached screen session
-# To access the container, issue screen -r "host1"
+#!/bin/bash
+# Dead Simple (and silly)  utility to know an LXC ip address 
+# Assumes Debian or Ubuntu, with eth0 address obtained via DHCP
+# TODO:
+# Personalize LXC root dir
+# maybe using chroot 
+
+if [ -z "$1" ] ; then 
+  echo "You must specify a container name!"
+  exit 128
+fi 
+
+CONTAINER=$1
+
+if [ ! -d  /var/lib/lxc/$CONTAINER/rootfs/ ] ; then 
+     echo "$CONTAINER not created"
+     exit 127
+fi   
+
+if [ ! -f /var/lib/lxc/$CONTAINER/rootfs/var/lib/dhcp/dhclient.eth0.leases ] ; then 
+     echo "$CONTAINER eth0 seems not DHCP managed or simply is not running  "
+     exit 127
+fi   
 
 
 
-function lxc-start {  screen -d -m -S "$1" -- lxc-start -n "$1" }
+IPADD=$(awk  '/fixed-address/{split($2,array,";") ; print array[1]}'  /var/lib/lxc/$CONTAINER/rootfs/var/lib/dhcp/dhclient.eth0.leases )
+
+echo -e  "LXC container named $CONTAINER IP address is:\n\t  $IPADD"
 
