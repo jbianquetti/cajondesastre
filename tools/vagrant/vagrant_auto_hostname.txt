@@ -1,0 +1,12 @@
+If you want that your vm take  the  current dirname as hostname, include this in Vagrantfile
+
+
+   config.vm.host_name =  Dir.getwd.split("/")[-1] <-- Unix Only, Windows must be much similar
+
+Example: 
+
+You have a dir /home/user/vagrant_playground/chef-sybase. 
+With this hack, the vm hostname sets to "chef-sybase". 
+
+Damn Cool!
+
