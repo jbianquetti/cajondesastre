@@ -21,7 +21,7 @@ Steps
     
             - name of cookbook 
             
-            - URL to grab (uses git repos!)
+            - URL to grab (uses git repos!) or local filesystem path
             
             - indicates a specific revision to grab from repo
             
