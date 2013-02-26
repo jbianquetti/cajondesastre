@@ -15,9 +15,13 @@ git config --global alias.st status   # git st
 git config --global alias.ci commit   # git ci 
 git config --global alias.co checkout # git co
 git config --global alias.br branch   # git br
+git config --global alias.hist  "log --graph --pretty=format:'%C(yellow)%h%Creset -%C(green)%d%Creset %s %C(cyan)(%cr) %C(magenta)<%an>%Creset' --abbrev-commit --date=relative" # git hist
 
 # turn on the credential helper so that git will save your password in memory for 15 minutes
 # ONLY work with "https://"  repos," git://" repos uses SSH key auth.
 # Let's change to 1 hour
 
 git config --global credential.helper 'cache --timeout=3600'
+
+
+
